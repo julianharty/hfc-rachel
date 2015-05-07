@@ -25,3 +25,10 @@ git clone https://github.com/phetsims/assert.git
 
 # The first of the actual PHET Exercises
 git clone https://github.com/phetsims/balancing-act.git
+
+# Now copy the support files
+SCRIPT_PATH="$(dirname $(readlink -f "$0"))"
+cp -R ${SCRIPT_PATH}/css .
+cp -R ${SCRIPT_PATH}/images .
+cp -R ${SCRIPT_PATH}/index.html .
+

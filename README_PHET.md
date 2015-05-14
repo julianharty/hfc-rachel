@@ -18,7 +18,7 @@ see http://nginx.org/en/docs/beginners_guide.html and https://www.digitalocean.c
 
 create /etc/nginx/sites-available/rachel # and add the following contents
 
-  server {
+    server {
         listen 8080 default_server;
         listen [::]:8080 default_server ipv6only=on;
 
@@ -34,35 +34,41 @@ create /etc/nginx/sites-available/rachel # and add the following contents
                 # as directory, then fall back to displaying a 404.
                 try_files $uri $uri/ =404;
         }
-  }
+    }
 
-  sudo ln -s /etc/nginx/sites-available/rachel /etc/nginx/sites-enabled/
+
+    sudo ln -s /etc/nginx/sites-available/rachel /etc/nginx/sites-enabled/
 Remove any default configuration (assuming you don't need it)
-sudo rm /etc/nginx/sites-enabled/default
 
-sudo service nginx restart
+    sudo rm /etc/nginx/sites-enabled/default
+
+
+    sudo service nginx restart
 
 Try accessing the server locally in a web browser e.g. http://localhost:8080/
 
 You should see the index.html page for PhET simulations.
 
 If you'd like to debug, try 
-  tail -f /var/log/nginx/error.log 
+
+    tail -f /var/log/nginx/error.log 
 
 == Creating the zim file ==
 See https://sourceforge.net/p/kiwix/bugs/871/ for the background. Currently we use an additional parameter --uniqueNamespace to co-locate the JavaScript files with the rest of the HTML contents. We may refine this process soon, it's an interim solution to enable the JavaScript files used by PhET to be found.
 
-/home/julian/kiwix-other/zimwriterfs/zimwriterfs --welcome=index.html --language=eng --title=PhET --description='PhET proof-of-concept' --creator='University of Colorado' --favicon=favicon.ico --uniqueNamespace --publisher=Julian . /home/julian/phet.zim
+    /home/julian/kiwix-other/zimwriterfs/zimwriterfs --welcome=index.html --language=eng --title=PhET --description='PhET proof-of-concept' --creator='University of Colorado' --favicon=favicon.ico --uniqueNamespace --publisher=Julian . /home/julian/phet.zim
 
 == testing kiwix-serve ==
 either use the standalone kiwix-serve program or one of the desktop clients. For desktop clients, start the server using the tools menu.
 
 Here is an example of my local URL for a zim file called scriptedphet.zim where kiwix-serve is using port 8000. You need to match these values to whatever values you used for the zim filename and the server port. 
-http://localhost:8000/scriptedphet/A/acid-base-solutions/acid-base-solutions_en.html
+
+    http://localhost:8000/scriptedphet/A/acid-base-solutions/acid-base-solutions_en.html
 
 == optional manual cleanup ==
 We can reduce the size of the zim file by removing the git-related files in the folder we're working in. If you want to run these commands, do so in the working folder where you ran the phet_init.sh script.Be careful, these commands will remove git-related files in all sub-folders from where the command is run. If in doubt, don't use them. I'm seeking cleaner, safer ways to filter out these files from the zim file we create. 
 
 There's minimal error detection so please pay attention to the results. At some stage we may want to remove the git meta-data which halves the space needed. Here are raw commands that seem to do the relevant cleanup, run them in the relevant folder.
-find . -type f | grep -i "\.git" | xargs rm
-find . -type d | grep -i "\.git" | xargs rm -rf
+
+    find . -type f | grep -i "\.git" | xargs rm
+    find . -type d | grep -i "\.git" | xargs rm -rf

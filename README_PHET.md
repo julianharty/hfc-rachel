@@ -13,9 +13,12 @@ Here's an overview of the steps needed to test the PhET download and setup proce
 * Test by setting this folder as the root of a web server, I'm using nginx
 
 == nginx setup ==
+Here's a rough outine of what I ended up hacking in order to test. YMMV 
+see http://nginx.org/en/docs/beginners_guide.html and https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts which helped me get nginx working pretty quickly and easily.
+
 create /etc/nginx/sites-available/rachel # and add the following contents
 
-server {
+  server {
         listen 8080 default_server;
         listen [::]:8080 default_server ipv6only=on;
 
@@ -31,9 +34,9 @@ server {
                 # as directory, then fall back to displaying a 404.
                 try_files $uri $uri/ =404;
         }
-}
+  }
 
-sudo ln -s /etc/nginx/sites-available/rachel /etc/nginx/sites-enabled/
+  sudo ln -s /etc/nginx/sites-available/rachel /etc/nginx/sites-enabled/
 Remove any default configuration (assuming you don't need it)
 sudo rm /etc/nginx/sites-enabled/default
 
@@ -44,7 +47,7 @@ Try accessing the server locally in a web browser e.g. http://localhost:8080/
 You should see the index.html page for PhET simulations.
 
 If you'd like to debug, try 
-tail -f /var/log/nginx/error.log 
+  tail -f /var/log/nginx/error.log 
 
 == Creating the zim file ==
 See https://sourceforge.net/p/kiwix/bugs/871/ for the background. Currently we use an additional parameter --uniqueNamespace to co-locate the JavaScript files with the rest of the HTML contents. We may refine this process soon, it's an interim solution to enable the JavaScript files used by PhET to be found.

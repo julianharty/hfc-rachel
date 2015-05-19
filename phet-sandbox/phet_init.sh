@@ -24,7 +24,9 @@ git clone https://github.com/phetsims/brand.git
 git clone https://github.com/phetsims/assert.git
 
 # The first of the actual PHET Exercises
+git clone https://github.com/phetsims/acid-base-solutions.git
 git clone https://github.com/phetsims/balancing-act.git
+git clone https://github.com/phetsims/area-builder.git
 
 # Now copy the support files
 SCRIPT_PATH="$(dirname $(readlink -f "$0"))"

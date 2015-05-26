@@ -31,6 +31,7 @@ git clone https://github.com/phetsims/area-builder.git
 # Now copy the support files
 SCRIPT_PATH="$(dirname $(readlink -f "$0"))"
 cp -R ${SCRIPT_PATH}/css .
+cp -R ${SCRIPT_PATH}/favicon.ico .
 cp -R ${SCRIPT_PATH}/images .
 cp -R ${SCRIPT_PATH}/index.html .
 
